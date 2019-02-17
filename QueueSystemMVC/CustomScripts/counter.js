@@ -5,7 +5,7 @@ setInputFilter(document.getElementById("num_only"), function (value) {
 function genQueueNo(queueObj) {
     return queueNo = queueObj.QueueType + queueObj.QueueNo.toString().padStart('4', 0);
 }
-let currentQueueNo;
+let currentNo;
 
 async function callNext(requestUrl) {
     let counterNo = document.getElementById("num_only").value;
@@ -41,16 +41,13 @@ async function callAgain(requestUrl) {
     showAlert("calling_again_alert", "Calling Queue No <b>" + queueNo + "</b> again");
 }
 
-async function skip(requestUrl) {
-    let result = await fetch(requestUrl + "/" + currentNo);
+async function skip(skipUrl, callNextUrl) {
+    let result = await fetch(skipUrl+ "/" + currentNo);
     let data = await result.json();
     let queueNo = genQueueNo(data);
-
-    currentNo = data.QueueNo;
+    await callNext(callNextUrl);
     showAlert("skip_alert", "Queue No <b>" + queueNo + "</b> had been skipped. Click on 'Call Next' to call the next person");
 
-    document.getElementById("call_again").disabled = true;
-    document.getElementById("skip").disabled = true;
     document.getElementById("calling_header").innerHTML = "";
 }
 

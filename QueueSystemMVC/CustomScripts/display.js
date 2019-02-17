@@ -1,11 +1,10 @@
 ﻿class QueueDisplay {
     constructor() {
         this.callingArray = new Array();
-        this.missedArray = new Array();
+        this.skippedArray= new Array();
         this.counterDoms = Array(...document.getElementsByClassName("counter"));
         this.queueNoDoms = Array(...document.getElementsByClassName("queueNo"));
         this.skippedDoms = Array(...document.getElementsByClassName("skipped"));
-
         this.bell = new Audio("/Content/bell.mp3");
 
         const order_by_id = (a, b) => {
@@ -19,18 +18,30 @@
         this.skippedDoms = this.skippedDoms.sort(order_by_id);
 
         this.call_next = this.call_next.bind(this);
+        this.remove = this.remove.bind(this);
         this.remove_and_prepend = this.remove_and_prepend.bind(this);
         this.render = this.render.bind(this);
     }
 
     call_next(newQ) {
         newQ = add_domObjs_to_queue(newQ);
-        this.callingArray = this.remove_and_prepend(newQ).slice(0, 8);
+        this.skippedArray = this.remove(newQ, this.skippedArray);
+        this.callingArray = this.remove_and_prepend(newQ, this.callingArray).slice(0, 8);
         this.bell.play();
     }
 
-    remove_and_prepend(newQ) {
-        let newArray = this.callingArray.filter(q => q.QueueNo !== newQ.QueueNo);
+    skip_number(currentQ) {
+        this.callingArray = this.remove(currentQ, this.callingArray);
+        currentQ.queueDom = create_queue_domObj(genQueueNo(currentQ));
+        this.skippedArray = this.remove_and_prepend(currentQ, this.skippedArray).slice(0,5);
+    }
+
+    remove(newQ, qArray) {
+        return qArray.filter(q => q.QueueNo !== newQ.QueueNo);
+    }
+
+    remove_and_prepend(newQ, qArray) {
+        let newArray = this.remove(newQ, qArray);
         newArray.unshift(newQ);
         return newArray;
     }
@@ -42,26 +53,35 @@
             this.queueNoDoms[i].innerHTML = "";
             this.queueNoDoms[i].appendChild(q.queueDom);
         });
-        document.dispatchEvent(new Event("flash"));
+
+        this.skippedArray.forEach((q, i) => {
+            this.skippedDoms[i].innerHTML = "";
+            this.skippedDoms[i].appendChild(q.queueDom);
+        });
     }
 }
 
 function add_domObjs_to_queue(q) {
     q.counterDom = create_queue_domObj(q.CounterNo);
-    q.queueDom = create_queue_domObj(q.QueueType + q.QueueNo);
+    q.queueDom = create_queue_domObj(genQueueNo(q));
+    set_flash(q);
     return q;
 }
 
 function create_queue_domObj(innerText) {
     let domObj = document.createElement("div");
     domObj.innerText = innerText;
-    domObj.classList.add("flash")
+    return domObj
+}
+
+function set_flash(q) {
+    q.counterDom.classList.add("flash")
+    q.queueDom.classList.add("flash")
     setTimeout(function () {
-        console.log("flashed");
-        domObj.classList.remove("flash");
+        q.counterDom.classList.remove("flash");
+        q.queueDom.classList.remove("flash");
     }, 5000)
 
-    return domObj
 }
 
 function connect() {

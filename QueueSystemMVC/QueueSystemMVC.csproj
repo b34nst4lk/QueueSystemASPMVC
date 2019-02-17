@@ -239,6 +239,7 @@
     <Content Include="CustomScripts\counter.js" />
     <Content Include="CustomScripts\display.js" />
     <Content Include="CustomScripts\registration.js" />
+    <Content Include="CustomScripts\input_filter.js" />
     <Content Include="CustomStyles\display.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

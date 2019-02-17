@@ -14,7 +14,7 @@
 <div>
     <input type="button" id="call_next" class="btn btn-primary btn-lg btn-block" onclick="callNext('@Url.Action((string)ViewData["QueueType"], "Counter")');" value="Call Next Number"/>
     <input type="button" disabled id="call_again" class="btn btn-lg btn-block" onclick="callAgain('@Url.Action("CallAgain", "Counter")');" value="Call Number Again"/>
-    <input type="button" disabled id="skip" class="btn btn-primary btn-lg btn-block" onclick="skip('@Url.Action("Skip", "Counter")');" value="Skip Current Number"/>
+    <input type="button" disabled id="skip" class="btn btn-primary btn-lg btn-block" onclick="skip('@Url.Action("Skip", "Counter")', '@Url.Action((string)ViewData["QueueType"], "Counter")');" value="Skip Current Number"/>
 </div>
 
 <h1 id="calling_header"></h1>

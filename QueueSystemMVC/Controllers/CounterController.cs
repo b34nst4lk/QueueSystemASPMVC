@@ -30,9 +30,9 @@ namespace QueueSystemMVC.Controllers
             return View("Counter");
         }
 
-        public JsonResult RegisteredCallNext(int id)
+        private JsonResult CallNext(int id, QueueType qType)
         {
-            Queue q = _queueService.CallNext(id, QueueType.Registered);
+            Queue q = _queueService.CallNext(id, qType);
             if (!(q is null)) _client.CallNext(q);
             return new JsonResult()
             {
@@ -41,15 +41,14 @@ namespace QueueSystemMVC.Controllers
             };
         }
 
+        public JsonResult RegisteredCallNext(int id)
+        {
+            return CallNext(id, QueueType.Registered);
+        }
+
         public JsonResult WalkInCallNext(int id)
         {
-            Queue q = _queueService.CallNext(id, QueueType.WalkIn);
-            if (!(q is null)) _client.CallNext(q);
-            return new JsonResult()
-            {
-                Data = q is null ? new Queue() : q,
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
+            return CallNext(id, QueueType.WalkIn);
         }
 
         public JsonResult CallAgain(int id)

@@ -36,6 +36,7 @@ namespace QueueSystemMVC
 
             registration.Include(
                 "~/CustomScripts/common.js",
+                "~/CustomScripts/input_filter.js",
                 "~/CustomScripts/registration.js"
             );
 
@@ -46,6 +47,7 @@ namespace QueueSystemMVC
 
             counter.Include(
                 "~/CustomScripts/common.js",
+                "~/CustomScripts/input_filter.js",
                 "~/CustomScripts/counter.js"
             );
 
@@ -53,8 +55,9 @@ namespace QueueSystemMVC
 
             // Display 
             bundles.Add(new ScriptBundle("~/bundles/display").Include(
-                    "~/CustomScripts/display.js"
-                ));
+                "~/CustomScripts/common.js",
+                "~/CustomScripts/display.js"
+            ));
         }
     }
 }
