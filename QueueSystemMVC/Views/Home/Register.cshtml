@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="col-12">
+    <h1>Register</h1>
+    <div class="alert alert-success" id="success_register" hidden>Random text</div>
+    <input type="button" onclick="signIn('R', '@Url.Action("SignIn", "Home")')" class="btn btn-primary btn-block btn-lg" value="Registered"/>
+    <input type="button" onclick="signIn('W', '@Url.Action("SignIn", "Home")')"  class="btn btn-primary btn-block btn-lg" value="Walk In"/>
+
+    <hr />
+
+    <h1>Reenroll Missed Numbers</h1>
+    <div class="alert alert-success" id="reenroll_success" hidden></div>
+    <div class="alert alert-danger" id="failed_to_reenroll" hidden></div>
+    <p>Please enter only the numbers</p>
+    <input type="text" id="num_only" class="form-control input-lg" placeholder="Enter missed queue no."/>
+    <input type="button" onclick="reenroll('@Url.Action("Reenroll", "Home")')"class="btn btn-block btn-lg" value="Reenroll" />
+</div>
+
+@Scripts.Render("~/bundles/registration")

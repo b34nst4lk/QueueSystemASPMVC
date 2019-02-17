@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Display";
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td colspan="4" class="bg-primary text-center" style="font-size:4em">Queue Numbers</td>
+        </tr>
+        <tr style="font-size:6em">
+            <td>Counter</td>
+            <td>QueueNo</td>
+            <td>Counter</td>
+            <td>QueueNo</td>
+        </tr>
+    </thead>
+    <tbody style="font-size:8em">
+        @for (int i = 0; i < 4; i++)
+        {
+            <tr>
+                <td class="counter" id=@("counter_" + i.ToString())></td>
+                <td class="queueNo" id=@("queue_" + i.ToString())></td>
+                <td class="counter" id=@("counter_" + (i + 4).ToString())></td>
+                <td class="queueNo" id=@("queue_" + (i + 4).ToString())></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td colspan="5" class="bg-danger text-center" style="font-size:4em">Missed Numbers</td>
+        </tr>
+    </thead>
+    <tbody style="font-size:8em">
+        <tr>
+            @for (int i = 0; i < 5; i++)
+            {
+                <td class="skipped" id=@("missed_" + @i)></td>
+            }
+        </tr>
+    </tbody>
+</table>
+
+@Scripts.Render("~/bundles/display")
+@Styles.Render("~/Content/display")

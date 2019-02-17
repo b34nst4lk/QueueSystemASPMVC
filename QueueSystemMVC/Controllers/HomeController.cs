@@ -3,28 +3,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using QueueSystemMVC.Models;
 
 namespace QueueSystemMVC.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private readonly QueueService _queueService;
+
+        public HomeController(QueueService queueService)
+        {
+            _queueService = queueService;
+        }
+
+        public ActionResult Register()
         {
             return View();
         }
 
-        public ActionResult About()
+        public JsonResult SignIn(char id)
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            Queue q = _queueService.SignIn((QueueType) id);
+            return new JsonResult() {
+                Data = q,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
 
-        public ActionResult Contact()
+        public JsonResult Reenroll(int id)
         {
-            ViewBag.Message = "Your contact page.";
+            Queue q = _queueService.Reenroll(id);
 
-            return View();
+            return new JsonResult()
+            {
+                Data = q,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
     }
 }

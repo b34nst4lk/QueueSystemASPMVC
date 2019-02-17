@@ -8,6 +8,7 @@ namespace QueueSystemMVC
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            // JQuery
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -25,6 +26,35 @@ namespace QueueSystemMVC
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/display").Include(
+                "~/CustomStyles/display.css" 
+            ));
+
+            // Registration Scripts
+            ScriptBundle registration = new ScriptBundle("~/bundles/registration");
+
+            registration.Include(
+                "~/CustomScripts/common.js",
+                "~/CustomScripts/registration.js"
+            );
+
+            bundles.Add(registration);
+
+            // Counter Scripts        
+            ScriptBundle counter = new ScriptBundle("~/bundles/counter");
+
+            counter.Include(
+                "~/CustomScripts/common.js",
+                "~/CustomScripts/counter.js"
+            );
+
+            bundles.Add(counter);
+
+            // Display 
+            bundles.Add(new ScriptBundle("~/bundles/display").Include(
+                    "~/CustomScripts/display.js"
+                ));
         }
     }
 }
