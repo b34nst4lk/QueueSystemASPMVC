@@ -24,5 +24,6 @@ namespace QueueSystemMVC.Controllers
         public void CallNext(Queue q) => Broadcast(new Message(Type.CALL_NEXT, q));
         public void CallAgain(Queue q) => Broadcast(new Message(Type.CALL_AGAIN, q));
         public void SkipNumber(Queue q) => Broadcast(new Message(Type.SKIP_NUMBER, q));
+        public void Reenroll(Queue q) => Broadcast(new Message(Type.REENROLL, q));
     }
 }

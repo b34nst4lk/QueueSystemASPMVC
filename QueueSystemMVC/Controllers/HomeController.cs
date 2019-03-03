@@ -10,10 +10,12 @@ namespace QueueSystemMVC.Controllers
     public class HomeController : Controller
     {
         private readonly QueueService _queueService;
+        private readonly DisplayWebSocket _client;
 
-        public HomeController(QueueService queueService)
+        public HomeController(QueueService queueService, DisplayWebSocket client)
         {
             _queueService = queueService;
+            _client = client;
         }
 
         public ActionResult Register()
@@ -33,7 +35,7 @@ namespace QueueSystemMVC.Controllers
         public JsonResult Reenroll(int id)
         {
             Queue q = _queueService.Reenroll(id);
-
+            _client.Reenroll(q);
             return new JsonResult()
             {
                 Data = q,

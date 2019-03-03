@@ -10,6 +10,7 @@ namespace QueueSystemMVC.Models
         public readonly static string CALL_NEXT = "call_next";
         public readonly static string CALL_AGAIN = "call_again";
         public readonly static string SKIP_NUMBER = "skip_number";
+        public readonly static string REENROLL = "reenroll";
     }
 
     public class Message

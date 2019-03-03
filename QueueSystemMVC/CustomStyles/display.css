@@ -1,4 +1,8 @@
-﻿.flash {
+﻿.white {
+    color: white;
+}
+
+.flash {
     color: red;
     animation: blinker 1s linear infinite;
 }

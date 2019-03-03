@@ -26,6 +26,7 @@
     call_next(newQ) {
         newQ = add_domObjs_to_queue(newQ);
         this.skippedArray = this.remove(newQ, this.skippedArray);
+        console.log(this.skippedArray);
         this.callingArray = this.remove_and_prepend(newQ, this.callingArray).slice(0, 8);
         this.bell.play();
     }
@@ -33,7 +34,11 @@
     skip_number(currentQ) {
         this.callingArray = this.remove(currentQ, this.callingArray);
         currentQ.queueDom = create_queue_domObj(genQueueNo(currentQ));
-        this.skippedArray = this.remove_and_prepend(currentQ, this.skippedArray).slice(0,5);
+        this.skippedArray = this.remove_and_prepend(currentQ, this.skippedArray).slice(0,10);
+    }
+
+    reenroll(Q) {
+        this.skippedArray = this.remove(Q, this.skippedArray);
     }
 
     remove(newQ, qArray) {
@@ -54,9 +59,14 @@
             this.queueNoDoms[i].appendChild(q.queueDom);
         });
 
-        this.skippedArray.forEach((q, i) => {
-            this.skippedDoms[i].innerHTML = "";
-            this.skippedDoms[i].appendChild(q.queueDom);
+        this.skippedDoms.forEach((d, i) => {
+            d.innerHTML = "";
+            try {
+                d.appendChild(this.skippedArray[i].queueDom);
+            } catch (Exception) {
+                d.appendChild(create_filler_div())
+            }
+
         });
     }
 }
@@ -66,6 +76,13 @@ function add_domObjs_to_queue(q) {
     q.queueDom = create_queue_domObj(genQueueNo(q));
     set_flash(q);
     return q;
+}
+
+function create_filler_div() {
+    let domObj = document.createElement("div");
+    domObj.innerText = "00000";
+    domObj.classList.add("white");
+    return domObj;
 }
 
 function create_queue_domObj(innerText) {
@@ -109,6 +126,9 @@ function connect() {
                 break;
             case "skip_number":
                 queue.skip_number(message.Queue);
+                break;
+            case "reenroll":
+                queue.reenroll(message.Queue);
                 break;
         }
         queue.render();

@@ -51,6 +51,11 @@ namespace QueueSystemMVC.Models
 
         public Queue GetQueueByQueueNo(int id)
         {
+            IQueryable<Queue> queue = context.Queues.Where(q => q.QueueNo == id);
+
+            if (queue.Count() == 0)
+                return null;
+
             return context.Queues.First(q => q.QueueNo == id);
         }
 

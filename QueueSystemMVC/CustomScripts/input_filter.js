@@ -21,7 +21,7 @@ setInputFilter(document.getElementById("num_only"), function (value) {
 
 let delayIds = {}
 
-function showAlert(alertId, msg) {
+function showAlert(alertId, msg, timeout=5000) {
     if (alertId in delayIds) clearTimeout(delayIds[alertId]);
 
     let elem = document.getElementById(alertId);
@@ -29,7 +29,7 @@ function showAlert(alertId, msg) {
     elem.innerHTML = msg;
     delayIds[alertId] = setTimeout(
         () => elem.hidden = true,
-        5000
+        timeout
     )
 }
 
